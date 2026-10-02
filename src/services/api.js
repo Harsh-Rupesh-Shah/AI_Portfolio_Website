@@ -15,36 +15,57 @@ export async function queryCopilot(query) {
   if (!query) return null;
 
   // Try real backend if configured
-  if (API_BASE_URL) {
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/copilot`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        return data.response;
-      }
-    } catch (err) {
-      console.warn('[Copilot API] Backend unavailable, using local deterministic fallback:', err);
+  try {
+    const targetUrl = API_BASE_URL ? `${API_BASE_URL}/api/copilot` : '/api/copilot';
+    const res = await fetch(targetUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return {
+        text: data.response,
+        sources: data.sources || [],
+        toolCalls: data.tool_calls || [],
+        model: data.model || 'gemini-2.5-flash (LangGraph ReAct Agent)'
+      };
     }
+  } catch (err) {
+    console.warn('[Copilot API] Backend unavailable, using local deterministic fallback:', err);
   }
 
   // Deterministic local simulation fallback
   await new Promise(resolve => setTimeout(resolve, 240));
 
   const directMatch = COPILOT_KNOWLEDGE[query];
-  if (directMatch) return directMatch;
+  if (directMatch) {
+    return {
+      text: directMatch,
+      sources: ["harsh_knowledge_base.md", "resume.pdf"],
+      toolCalls: ["query_harsh_dossier_rag"],
+      model: "local-rag-fallback"
+    };
+  }
 
   const normalized = query.toLowerCase();
   for (const [key, val] of Object.entries(COPILOT_KNOWLEDGE)) {
     if (normalized.includes(key.toLowerCase()) || key.toLowerCase().includes(normalized)) {
-      return val;
+      return {
+        text: val,
+        sources: ["harsh_knowledge_base.md", "resume.pdf"],
+        toolCalls: ["query_harsh_dossier_rag"],
+        model: "local-rag-fallback"
+      };
     }
   }
 
-  return `[HS-01 COGNITION]: Harsh specializes in deterministic agent architectures, LangGraph orchestration, and Model Context Protocol (MCP) tooling. He builds production-grade pipelines in Python/FastAPI with latency and cost optimization. (Query: "${query}")`;
+  return {
+    text: `[HS-01 COGNITION]: Harsh specializes in deterministic agent architectures, LangGraph orchestration, and Model Context Protocol (MCP) tooling. He builds production-grade pipelines in Python/FastAPI with latency and cost optimization. (Query: "${query}")`,
+    sources: ["harsh_knowledge_base.md"],
+    toolCalls: ["query_harsh_dossier_rag"],
+    model: "local-rag-fallback"
+  };
 }
 
 /**
@@ -81,22 +102,29 @@ export async function executeTerminalCommand(cmd) {
   const trimmed = cmd.trim();
   if (!trimmed) return null;
 
-  if (API_BASE_URL) {
-    try {
-      const res = await fetch(`${API_BASE_URL}/api/terminal`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ command: trimmed })
-      });
-      if (res.ok) {
-        return await res.json();
+  const targetUrl = API_BASE_URL ? `${API_BASE_URL}/api/terminal` : '/api/terminal';
+
+  try {
+    const res = await fetch(targetUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ command: trimmed })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && typeof data.output === 'string') {
+        return data;
       }
-    } catch (err) {
-      console.warn('[Terminal API] Backend unreachable, evaluating locally:', err);
     }
+  } catch (err) {
+    console.warn('[Terminal API] Backend unreachable, evaluating locally:', err);
   }
 
   const normalized = trimmed.toLowerCase();
+
+  if (normalized === 'clear') {
+    return { type: 'clear', output: '' };
+  }
 
   if (TERMINAL_COMMANDS[normalized]) {
     return {
@@ -108,14 +136,11 @@ export async function executeTerminalCommand(cmd) {
   if (normalized.startsWith('ask ')) {
     const q = trimmed.slice(4).trim();
     const answer = await queryCopilot(q);
+    const textVal = typeof answer === 'object' && answer !== null ? answer.text : String(answer || '');
     return {
       type: 'inference',
       query: q,
-      output: `> INFERENCE IN PROGRESS: "${q}"
-> Vector Cosine Match: 0.942 on collection 'production_systems'
-> Retrieval Context: Found 3 LangGraph pipelines and 4 custom MCP tools built by Harsh.
-> Synthesized Answer:
-${answer}`
+      output: `> INFERENCE ENGINE: HS-01 Local Cognition\n> Autonomous Tools Invoked: [query_harsh_dossier_rag]\n> Grounded Knowledge: [harsh_knowledge_base.md, resume.pdf]\n\n${textVal}`
     };
   }
 
@@ -130,8 +155,22 @@ ${answer}`
     };
   }
 
+  // Handle natural language question without explicit 'ask'
+  const questionWords = ['what', 'how', 'who', 'tell', 'explain', 'describe', 'why', 'where', 'can', 'is', 'does', 'which'];
+  const isQuestion = normalized.includes(' ') || normalized.endsWith('?') || questionWords.some((w) => normalized.startsWith(w));
+
+  if (isQuestion) {
+    const answer = await queryCopilot(trimmed);
+    const textVal = typeof answer === 'object' && answer !== null ? answer.text : String(answer || '');
+    return {
+      type: 'inference',
+      query: trimmed,
+      output: `> INFERENCE ENGINE: HS-01 Local Cognition\n> Autonomous Tools Invoked: [query_harsh_dossier_rag]\n> Grounded Knowledge: [harsh_knowledge_base.md, resume.pdf]\n\n${textVal}`
+    };
+  }
+
   return {
     type: 'error',
-    output: `zsh: command not found: ${trimmed}\nType 'help' to see all supported diagnostic commands.`
+    output: `zsh: command not found: ${trimmed}\nType 'help' to see all supported diagnostic commands, or ask any question.`
   };
 }

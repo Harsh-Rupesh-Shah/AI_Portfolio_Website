@@ -77,6 +77,22 @@ export default function SystemDetailModal({ system, onClose }) {
             ))}
           </ul>
         </div>
+
+        {/* Repository Link if available */}
+        {system.githubUrl && (
+          <div style={{ paddingTop: '0.75rem', borderTop: '1px solid var(--border-hairline)', display: 'flex', justifyContent: 'flex-end' }}>
+            <a
+              href={system.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '12px', padding: '0.5rem 1rem' }}
+            >
+              <span>EXPLORE REPOSITORY ON GITHUB</span>
+              <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>open_in_new</span>
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

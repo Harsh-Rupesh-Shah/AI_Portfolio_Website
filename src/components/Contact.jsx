@@ -42,9 +42,14 @@ export default function Contact({ onAskCopilotContact }) {
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', justifyContent: 'center' }}>
-            <a href="mailto:harsh.shah@example.com" className="btn-primary">
+            <a href="mailto:hrsshah04022004@gmail.com" className="btn-primary">
               <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>mail</span>
-              <span>SEND EMAIL DIRECTLY</span>
+              <span>EMAIL: HRSSHAH04022004@GMAIL.COM</span>
+            </a>
+
+            <a href="tel:+919175366700" className="btn-secondary">
+              <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>call</span>
+              <span>+91 9175366700</span>
             </a>
 
             <button
@@ -142,16 +147,16 @@ export default function Contact({ onAskCopilotContact }) {
 
           {/* Social Channels Shelf */}
           <div className="contact-channels-shelf">
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="channel-link">
-              GITHUB
+            <a href="https://github.com/Harsh-Rupesh-Shah" target="_blank" rel="noreferrer" className="channel-link">
+              GITHUB ↗
             </a>
             <span>·</span>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="channel-link">
-              LINKEDIN
+            <a href="https://linkedin.com/in/harshshah2004" target="_blank" rel="noreferrer" className="channel-link">
+              LINKEDIN ↗
             </a>
             <span>·</span>
-            <a href="#about" className="channel-link">
-              RESUME [PDF]
+            <a href="/resume.pdf" download="Harsh_Shah_Resume.pdf" className="channel-link">
+              DOWNLOAD RESUME [PDF]
             </a>
           </div>
         </div>

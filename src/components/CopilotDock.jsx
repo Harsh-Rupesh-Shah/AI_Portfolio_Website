@@ -13,13 +13,23 @@ export default function CopilotDock({ onCommandSelect }) {
 
     setLoading(true);
     setIsOpen(true);
-    setResponse('Synthesizing indexed technical nodes across production repositories...');
+    setResponse({
+      text: 'Invoking LangChain ReAct Agent with Production RAG Tool...',
+      sources: [],
+      toolCalls: ['query_harsh_dossier_rag'],
+      model: 'gemini-2.5-flash'
+    });
 
     try {
       const res = await queryCopilot(textToRun.trim());
       setResponse(res);
     } catch (err) {
-      setResponse(`Error synthesizing query: ${err.message}`);
+      setResponse({
+        text: `Error synthesizing query: ${err.message}`,
+        sources: [],
+        toolCalls: [],
+        model: 'error'
+      });
     } finally {
       setLoading(false);
     }
@@ -45,13 +55,13 @@ export default function CopilotDock({ onCommandSelect }) {
             <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>smart_toy</span>
           </div>
           <div>
-            <span className="copilot-title">HS-01 COGNITIVE RUNTIME</span>
-            <span className="copilot-meta"> | GROUNDED IN PRODUCTION REPOSITORIES</span>
+            <span className="copilot-title">HS-01 LANGCHAIN AGENTIC RUNTIME</span>
+            <span className="copilot-meta"> | PRODUCTION RAG: KNOWLEDGE_BASE.MD + RESUME.PDF</span>
           </div>
         </div>
         <div className="copilot-status-indicator">
           <span className="dot-mint"></span>
-          <span>DETERMINISTIC · <strong style={{ color: 'var(--accent-mint)' }}>ZERO HALLUCINATION</strong></span>
+          <span>DETERMINISTIC · <strong style={{ color: 'var(--accent-mint)' }}>GEMINI 2.5 FLASH</strong></span>
         </div>
       </div>
 
@@ -59,10 +69,34 @@ export default function CopilotDock({ onCommandSelect }) {
       {isOpen && (
         <div className="copilot-response-drawer">
           <div className="response-header">
-            <span className="response-tag">
-              <span className="dot-mint"></span>
-              {loading ? 'HS-01 // RETRIEVING...' : 'HS-01 // RETRIEVAL VERIFIED'}
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <span className="response-tag">
+                <span className="dot-mint"></span>
+                {loading ? 'HS-01 // EXECUTING RAG TOOL...' : 'HS-01 // RAG GROUNDED'}
+              </span>
+
+              {response?.toolCalls?.length > 0 && (
+                <span
+                  style={{
+                    backgroundColor: 'rgba(29, 158, 117, 0.1)',
+                    color: 'var(--accent-mint)',
+                    padding: '1px 6px',
+                    borderRadius: '4px',
+                    fontSize: '9.5px',
+                    fontWeight: 600
+                  }}
+                >
+                  TOOL: [{response.toolCalls.join(', ')}]
+                </span>
+              )}
+
+              {response?.sources?.length > 0 && (
+                <span style={{ color: 'var(--text-muted)', fontSize: '9.5px' }}>
+                  SOURCES: [{response.sources.join(', ')}]
+                </span>
+              )}
+            </div>
+
             <button
               type="button"
               className="btn-close-response"
@@ -71,7 +105,7 @@ export default function CopilotDock({ onCommandSelect }) {
               ✕ CLOSE
             </button>
           </div>
-          <p className="response-body-text">{response}</p>
+          <p className="response-body-text">{response?.text || response}</p>
         </div>
       )}
 
@@ -104,28 +138,28 @@ export default function CopilotDock({ onCommandSelect }) {
           <button
             type="button"
             className="copilot-prompt-chip"
-            onClick={() => handleChipClick('Explain RMD workflow')}
+            onClick={() => handleChipClick('Tell me about Harsh and what he built at TIAA')}
           >
-            "Explain RMD workflow"
+            "TIAA Agentic Systems"
           </button>
           <button
             type="button"
             className="copilot-prompt-chip"
-            onClick={() => handleChipClick('Deterministic LLM benchmarks')}
+            onClick={() => handleChipClick('How does JobPilot use LangGraph?')}
           >
-            "Deterministic LLM benchmarks"
+            "JobPilot Architecture"
           </button>
           <button
             type="button"
             className="copilot-prompt-chip"
-            onClick={() => handleChipClick('Multi-agent swarm architecture')}
+            onClick={() => handleChipClick('How does AI Governance Copilot handle memory and policy?')}
           >
-            "Multi-agent swarm"
+            "AI Governance Copilot"
           </button>
           <button
             type="button"
             className="copilot-prompt-chip"
-            onClick={() => handleChipClick('How to reach Harsh?')}
+            onClick={() => handleChipClick('How can I contact or hire Harsh?')}
           >
             "Contact Harsh"
           </button>

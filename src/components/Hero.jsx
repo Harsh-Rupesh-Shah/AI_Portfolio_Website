@@ -14,7 +14,7 @@ export default function Hero({ onSwitchToTerminal }) {
             <div className="hero-status-pill">
               <span className="status-dot-pulse"></span>
               <span className="label-mono-sm" style={{ color: 'var(--text-ink)' }}>
-                HARSH SHAH // AGENTIC AI &amp; DISTRIBUTED SYSTEMS
+                HARSH SHAH // ANALYST - AGENTIC AI DEVELOPER @ TIAA
               </span>
             </div>
 
@@ -25,8 +25,8 @@ export default function Hero({ onSwitchToTerminal }) {
 
             {/* Technical Subtext */}
             <p className="hero-subtitle">
-              Software Developer specializing in deterministic LLM orchestration,
-              Model Context Protocol (MCP), and autonomous multi-agent graph workflows.
+              Agentic AI Developer at TIAA specializing in LangGraph multi-agent DAGs,
+              Model Context Protocol (MCP), and deterministic evaluation pipelines.
             </p>
 
             {/* Primary Actions */}
@@ -49,12 +49,13 @@ export default function Hero({ onSwitchToTerminal }) {
               </button>
 
               <a
-                href="#about"
+                href="/resume.pdf"
+                download="Harsh_Shah_Resume.pdf"
                 className="btn-secondary"
                 style={{ color: 'var(--text-muted)' }}
               >
                 <span>RESUME [PDF]</span>
-                <span style={{ fontSize: '10px' }}>· 240KB</span>
+                <span style={{ fontSize: '10px' }}>· DOWNLOAD</span>
               </a>
             </div>
           </div>

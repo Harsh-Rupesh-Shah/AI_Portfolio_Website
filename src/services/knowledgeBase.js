@@ -1,22 +1,24 @@
 /**
  * Knowledge Base & Telemetry Data
- * Extracted from Stitch project: AI Portfolio Website
- * Grounded in production repositories, LangGraph systems, and MCP tooling.
+ * Grounded in Harsh Shah's real experience, production repositories, and resume.
+ * Projects: TIAA Enterprise Agentic Systems, JobPilot, AI Decision Governance Copilot
  */
 
 export const COPILOT_KNOWLEDGE = {
   "Explain RMD workflow":
-    "In the TIAA retirement workflow, Harsh replaced multi-hop serial LLM calls with a single semantic routing graph using LangChain and Anthropic MCP. Round-trip latency was reduced from ~18s to 8.2s, cutting LLM calls from 5 down to 2–3 while ensuring 100% deterministic calculation accuracy and zero schema drift.",
+    "At TIAA, Harsh architected multi-agent enterprise workflows using LangChain, LangGraph, Model Context Protocol (MCP), and A2A protocols. He developed custom Python sequencers that reduced LLM calls from 5 to 2–3 per request, cutting round-trip latency from 17–18s to 8–9s while enforcing 100% deterministic calculation accuracy and SSE streaming.",
   "Deterministic LLM benchmarks":
-    "Harsh engineers deterministic evaluation harnesses using token fuzzing, schema validation assertions (Pydantic), and semantic drift measurement (< 0.05 rad), running in under 14.2s per 1,200-case test suite to achieve a 99.4% pass rate before production release on OpenShift.",
+    "Harsh enforces determinism across production LLM pipelines through Pydantic structured schemas, short-term and long-term state checkpointing in MongoDB, local ChromaDB policy vector stores, and automated adversarial eval harnesses to eliminate semantic drift and hallucinations.",
   "Multi-agent swarm architecture":
-    "A 4-agent collaborative swarm (Searcher, Critic, Verifier, Synthesizer) communicating over an asynchronous A2A JSON-RPC bus with 4.8x context compression, verified citation graph consensus, and a 0.2% verified hallucination delta.",
-  "Real-time MCP Context Fabric":
-    "A high-throughput Model Context Protocol server exposing verified tools (Retirement Calculators, DAG Evaluators, Context Pruners) over JSON-RPC with 4ms-12ms execution latency and cryptographic schema verification.",
+    "In projects like JobPilot and AI Decision Governance Copilot, Harsh designs stateful LangGraph directed acyclic graphs (DAGs). These feature concurrent worker nodes (research scrapers, ATS resume matchers, policy auditors, and risk evaluators), dual-layer memory, and human-in-the-loop (HITL) interrupt controls.",
+  "JobPilot architecture":
+    "JobPilot (github.com/Harsh-Rupesh-Shah/JobPilot) is a multi-agent system built on LangGraph. It runs a two-phase DAG: Phase 1 runs concurrent web scraping (Tavily/Playwright) and semantic ATS resume chunking (FAISS / all-MiniLM-L6-v2), and Phase 2 generates targeted materials. It uses LangGraph's interrupt() mechanism for human approval before dispatching outreach, multiplexing tokens to React via SSE.",
+  "AI Governance Copilot":
+    "The AI Decision Governance Copilot orchestrates specialized agents (Intent, Policy, Memory, Risk, Audit) with Gemini and LangGraph. It features dual-layer MongoDB memory (workflow checkpoints + persistent cross-thread user history) and a local ChromaDB RAG engine to evaluate and govern enterprise AI actions without hitting API rate limits.",
   "contact":
-    "Harsh can be reached directly via email at harsh.shah@example.com (or harsh@shah.systems), on LinkedIn at linkedin.com/in/harsh-shah-ai, or on GitHub at github.com/harsh-shah-dev. He is open to discussions on autonomous agent architectures, MCP implementations, and high-performance AI backend systems.",
+    "Harsh Shah is based in Mumbai, India. You can reach him at hrsshah04022004@gmail.com, on LinkedIn at linkedin.com/in/harshshah2004, or on GitHub at github.com/Harsh-Rupesh-Shah.",
   "How to reach Harsh?":
-    "Harsh is based in Mumbai, India (UTC +5:30) and collaborates globally. You can connect via email at harsh.shah@example.com or trigger the terminal 'contact' command for encrypted communication details."
+    "Harsh can be reached directly via email at hrsshah04022004@gmail.com or via phone at +91 9175366700. He is currently an Analyst - Agentic AI Developer at TIAA in Mumbai, open to discussions on autonomous agent architectures and distributed AI infrastructure."
 };
 
 export const SYSTEMS_DATA = [
@@ -24,91 +26,105 @@ export const SYSTEMS_DATA = [
     id: "system-01",
     tag: "FLAGSHIP · 01",
     organization: "TIAA ENTERPRISE PRODUCTION",
-    title: "Agentic Retirement Workflows (RMD / SDA)",
+    title: "Enterprise Multi-Agent Orchestrator",
     summary:
-      "Autonomous reasoning engine replacing fragile multi-hop advisor scripts with deterministic LangChain graph orchestration and Model Context Protocol (MCP) tool endpoints.",
-    tech: ["PYTHON", "FASTAPI", "LANGCHAIN", "MCP PROTOCOL", "DOCKER", "OPENSHIFT"],
+      "Production multi-agent systems using LangChain, LangGraph, Model Context Protocol (MCP), and A2A protocols, orchestrating domain-specific agents across complex financial workflows with real-time SSE streaming.",
+    tech: ["PYTHON", "FASTAPI", "LANGGRAPH", "MCP", "A2A", "REACT", "DOCKER", "OPENSHIFT"],
     telemetry: [
-      { label: "LLM INFERENCE CALLS", val: "2 - 3", previous: "5", note: "Optimized graph routing" },
-      { label: "ROUND-TRIP LATENCY", val: "8.2s", previous: "~18s", note: "-54% reduction", highlight: true },
-      { label: "CALCULATION DRIFT", val: "100% DETERMINISTIC", note: "Zero semantic drift" },
-      { label: "INTERFACE STANDARD", val: "MODEL CONTEXT PROTOCOL", note: "Anthropic MCP Specification", highlight: true }
+      { label: "LLM INFERENCE CALLS", val: "2 - 3", previous: "5", note: "Custom Python sequencers" },
+      { label: "ROUND-TRIP LATENCY", val: "8 - 9s", previous: "17 - 18s", note: "~50% reduction", highlight: true },
+      { label: "STREAMING PROTOCOL", val: "SSE & WEBSOCKETS", note: "Real-time perceived response", highlight: true },
+      { label: "DEPLOYMENT STACK", val: "OPENSHIFT / DOCKER", note: "Jenkins CI/CD automated gates" }
     ],
     dagSteps: [
-      { step: "01 / INGRESS", title: "User Intent Payload", desc: "Natural Language Request" },
-      { step: "02 / ORCHESTRATOR", title: "Agentic Graph", desc: "FastAPI + LangChain Memory", isCore: true },
-      { step: "03 / TOOL DISPATCH", title: "Deterministic MCP", desc: "RMD & Calculation Endpoints" },
-      { step: "04 / OUTPUT", title: "Audited Result", desc: "Zero Semantic Drift" }
+      { step: "01 / INGRESS", title: "Enterprise Request", desc: "User / Advisor conversational context" },
+      { step: "02 / ORCHESTRATION", title: "LangGraph Sequencer", desc: "State machine + Python dispatch", isCore: true },
+      { step: "03 / TOOL & PROTOCOL", title: "MCP & A2A Bus", desc: "Domain agent invocation & tool schemas" },
+      { step: "04 / STREAMING", title: "SSE Token Stream", desc: "Real-time React UI rendering" }
     ],
     architectureDetails: {
       problemStatement:
-        "Retirement calculations such as Required Minimum Distributions (RMD) and Systematic Distribution Annuities (SDA) require absolute regulatory precision. Traditional LLM prompting led to hallucinations and compounding errors over multi-step prompts.",
+        "Enterprise financial and retirement workflows involved fragile multi-hop LLM scripts with high latency (17–18s) and 5+ sequential API calls, causing slow response times and vulnerability to intermediate failure.",
       solutionArchitecture:
-        "Engineered a stateful LangGraph execution DAG. The LLM handles solely semantic intention parsing and structured parameter extraction via Pydantic schemas, delegating all math and calculations to audited Python MCP tool microservices.",
+        "Redesigned the orchestration architecture into a stateful multi-agent DAG using LangGraph and custom sequencers. Integrated Model Context Protocol (MCP) and A2A for standardized tool execution, with Server-Sent Events (SSE) and WebSockets multiplexing tokens directly to React UI components.",
       results: [
-        "Eliminated math hallucination completely (0% calculation error rate).",
-        "Decreased round-trip latency from ~18s to 8.2s by consolidating 5 serial calls into 2 parallelized graph nodes.",
-        "Created an immutable audit log for compliance with full state reconstruction."
+        "Cut LLM calls from 5 down to 2–3 per request through intelligent semantic routing.",
+        "Reduced round-trip latency from 17–18s to 8–9s, significantly improving user responsiveness.",
+        "Engineered real-time streaming architectures deployed reliably on OpenShift and Docker."
       ]
     }
   },
   {
     id: "system-02",
-    tag: "SYSTEM 02 // RESEARCH SWARM",
-    organization: "A2A PROTOCOL",
-    title: "Multi-Agent Research Synthesizer",
+    tag: "SYSTEM 02 // MULTI-AGENT DAG",
+    organization: "OPEN SOURCE PRODUCTION",
+    title: "JobPilot – Multi-Agent Job Application Co-Pilot",
     summary:
-      "Autonomous 4-agent collaborative swarm (Searcher, Critic, Verifier, Synthesizer) orchestrating paper summarization, citation graph validation, and cross-source consensus verification.",
-    tech: ["PYTORCH", "FASTAPI", "FAISS", "LANGGRAPH", "QDRANT"],
+      "A concurrent two-phase LangGraph system that automates tailored job preparation. Features parallel web scraping, semantic ATS resume chunking, and Human-in-the-Loop (HITL) execution controls.",
+    tech: ["LANGGRAPH", "FASTAPI", "FAISS", "PLAYWRIGHT", "TAVILY", "MONGODB", "REACT"],
+    githubUrl: "https://github.com/Harsh-Rupesh-Shah/JobPilot",
     topology: [
-      { role: "SEARCHER", active: false },
-      { role: "CRITIC", active: false },
-      { role: "SYNTHESIZER", active: true }
+      { role: "SUPERVISOR", active: false },
+      { role: "RESEARCH & ATS", active: true },
+      { role: "HITL APPROVAL", active: true }
     ],
     metrics: [
-      { label: "VERIFICATION DELTA", val: "0.2% DRIFT", highlight: true },
-      { label: "COMMUNICATION BUS", val: "A2A JSON RPC" }
+      { label: "WORKFLOW TOPOLOGY", val: "2-PHASE DAG", highlight: true },
+      { label: "CONTROL FLOW", val: "HITL INTERRUPT()" }
     ],
-    queryKey: "Multi-agent swarm architecture",
+    queryKey: "JobPilot architecture",
+    dagSteps: [
+      { step: "PHASE 1", title: "Supervisor Node", desc: "Structured metadata extraction" },
+      { step: "CONCURRENT", title: "Research & Resume", desc: "Tavily web briefing + FAISS vector search", isCore: true },
+      { step: "PHASE 2", title: "Synthesizer Agents", desc: "Cover letter, STAR interview prep, outreach" },
+      { step: "CONTROL", title: "HITL Interrupt", desc: "User approval before SMTP dispatch" }
+    ],
     architectureDetails: {
       problemStatement:
-        "Single-agent LLM summarization often confabulates citations, misrepresents statistical power, and misses contradictions between literature sources.",
+        "Customizing job applications requires gathering company context, aligning resume bullet points to ATS schemas, and writing personalized outreach—a process that is serial, repetitive, and time-consuming.",
       solutionArchitecture:
-        "Designed an asynchronous A2A (Agent-to-Agent) topology where a Searcher gathers candidate passages, a Critic adversarial stress-tests assertions, a Verifier checks against graph vector embeddings, and a Synthesizer writes the output only when consensus thresholds (>0.92) are met.",
+        "Built a stateful DAG in LangGraph split into two fan-out/fan-in phases. Phase 1 concurrently runs Tavily/Playwright company research alongside FAISS semantic resume chunking (all-MiniLM-L6-v2). Phase 2 synthesizes cover letters and interview prep. Utilizes LangGraph's interrupt() to pause before triggering outreach.",
       results: [
-        "4.8x context window compression through recursive summarization.",
-        "0.2% verified hallucination delta on cross-citation evaluation benchmarks.",
-        "Sub-second A2A message exchange using Redis pub/sub."
+        "Concurrent DAG design cuts total processing time by parallelizing web research and vector search.",
+        "Deterministic ATS scoring with semantic grounding prevents resume hallucination.",
+        "Safe execution with human verification before any email or file dispatch."
       ]
     }
   },
   {
     id: "system-03",
-    tag: "SYSTEM 03 // RELIABILITY",
-    organization: "CI/CD TESTBED",
-    title: "Deterministic Evaluation & Guardrail Harness",
+    tag: "SYSTEM 03 // GOVERNANCE & EVAL",
+    organization: "ENTERPRISE AGENT SYSTEM",
+    title: "AI Decision Governance Copilot",
     summary:
-      "Automated regression testbed for non-deterministic LLM pipelines, executing fuzz testing, semantic boundary assertion, and schema integrity validation prior to production deployment.",
-    tech: ["PYTHON", "DOCKER", "PYTEST", "PYDANTIC", "OPENSHIFT"],
+      "Stateful multi-agent governance system built with LangGraph and Google Gemini, automating risk analysis, policy compliance, and audit trails with dual-layer MongoDB memory.",
+    tech: ["LANGGRAPH", "GEMINI 2.0", "CHROMADB", "PYDANTIC", "MONGODB", "FASTAPI"],
+    githubUrl: "https://github.com/Harsh-Rupesh-Shah/AI_Governance_Project",
     progress: {
-      title: "BENCHMARK SUITE (1,200 CASES)",
-      percentage: "99.4%",
-      tags: ["TOKEN FUZZING", "SCHEMA INTEGRITY", "OPENSHIFT VERIFIED"]
+      title: "POLICY CONFORMITY & RISK GATES",
+      percentage: "100%",
+      tags: ["INTENT AGENT", "POLICY RAG", "DUAL-LAYER MEMORY", "RISK AUDITOR"]
     },
     metrics: [
-      { label: "SEMANTIC REGRESSION", val: "< 0.05 RAD", highlight: true },
-      { label: "CYCLE TIME", val: "14.2s SUITE" }
+      { label: "MEMORY ARCHITECTURE", val: "DUAL-LAYER MONGODB", highlight: true },
+      { label: "SCHEMA VALIDATION", val: "PYDANTIC RIGID" }
     ],
-    queryKey: "Deterministic LLM benchmarks",
+    queryKey: "AI Governance Copilot",
+    dagSteps: [
+      { step: "01 / INTENT", title: "Intent & Action Parser", desc: "Structured Gemini extraction" },
+      { step: "02 / POLICY RAG", title: "ChromaDB Store", desc: "Local policy embeddings (zero rate limits)", isCore: true },
+      { step: "03 / RISK EVAL", title: "Risk & Escalation", desc: "Historical cross-thread pattern detection" },
+      { step: "04 / AUDIT", title: "Audit Trail & Commit", desc: "MongoDB short & long term checkpointing" }
+    ],
     architectureDetails: {
       problemStatement:
-        "Prompt drift and foundation model updates frequently break production pipelines silently, altering output JSON structure or changing edge-case reasoning without error flags.",
+        "Autonomous AI systems acting in financial or operational domains (e.g. issuing refunds or modifying permissions) risk policy violations, stochastic drift, and repetitive vulnerabilities without cross-session memory.",
       solutionArchitecture:
-        "Constructed an automated CI/CD eval harness executing 1,200 deterministic unit and integration tests. Includes token perturbation fuzzing, schema boundary validation, and embedding drift angle metrics.",
+        "Orchestrated specialized agents (Intent, Policy, Memory, Risk, Audit) on a LangGraph state graph. Employs a dual-layer memory system: short-term state checkpoints for fault tolerance + MongoDBStore long-term memory to detect cross-thread risk patterns. Uses ChromaDB for rate-limit-free local policy RAG.",
       results: [
-        "99.4% test suite pass rate across 1,200 adversarial test fixtures.",
-        "Total execution cycle completed in 14.2s using parallelized async pytest runners.",
-        "Zero schema breaking regressions across 6 production release cycles."
+        "100% schema validation using Gemini with Pydantic structured output.",
+        "Zero API rate limit exposure on internal compliance rules through ChromaDB vector retrieval.",
+        "Automatic human escalation for anomalous or high-risk multi-agent requests."
       ]
     }
   }
@@ -117,148 +133,183 @@ export const SYSTEMS_DATA = [
 export const PIPELINE_STAGES = [
   {
     num: "01",
-    title: "CONCEPT",
-    desc: "Deconstructing manual friction into verifiable decision boundaries and system bounds.",
-    detail: "Requirement ingestion, regulatory constraint mapping, failure mode taxonomy."
+    title: "INGRESS & INTENT",
+    desc: "Deconstruct unstructured requests into validated Pydantic models with explicit boundary bounds.",
+    detail: "Supervisor parsing, intent classification, and schema enforcement before invoking agents."
   },
   {
     num: "02",
-    title: "GRAPH DESIGN",
-    desc: "Graph topology mapping, state-machine modeling, and failure-mode redundancy planning.",
-    detail: "Cyclic vs DAG flow definition, checkpoint strategy, timeout & fallback paths."
+    title: "CONCURRENT RETRIEVAL",
+    desc: "Fan-out execution running vector similarity search and real-time web scrapers in parallel.",
+    detail: "ChromaDB/FAISS vector embeddings coupled with Playwright or Tavily live web research."
   },
   {
     num: "03",
-    title: "ORCHESTRATE",
-    desc: "Stateful LangChain flows combining reasoning, tools, persistent memory, and structured outputs.",
-    detail: "Pydantic output parsing, thread-safe memory management, state checkpointing.",
+    title: "LANGGRAPH ORCHESTRATION",
+    desc: "Stateful cyclic/DAG graph with short-term checkpointing and custom node routing logic.",
+    detail: "Centralized state transitions, memory routing, and exception recovery via LangGraph checkpoints.",
     isCore: true
   },
   {
     num: "04",
-    title: "MCP CONNECT",
-    desc: "Exposing deterministic internal tools and enterprise data stores through Model Context Protocol.",
-    detail: "Anthropic MCP client/server schemas, secure JSON-RPC socket communication."
+    title: "MCP & TOOL DISPATCH",
+    desc: "Invoke external capabilities and domain microservices over Model Context Protocol and JSON-RPC.",
+    detail: "Cryptographically verified schemas, sandboxed execution, and A2A inter-agent message buses."
   },
   {
     num: "05",
-    title: "EVALUATE",
-    desc: "Automated regression suites, ground-truth validations, and token fuzz testing against drift.",
-    detail: "Embedding drift angle checks (< 0.05 rad), 1,200-case CI test matrix, prompt injection fuzzing."
+    title: "HITL & POLICY EVALUATION",
+    desc: "LangGraph interrupt() control flow pausing for human authorization on high-stakes actions.",
+    detail: "Cross-thread historical risk detection in MongoDB, token fuzzing, and deterministic guardrails."
   },
   {
     num: "06",
-    title: "SHIP",
-    desc: "Containerized deployments on OpenShift clusters with live telemetry budgets and health probes.",
-    detail: "Docker containerization, Prometheus/Grafana telemetry stream, automated canary rollout."
+    title: "STREAMING & CONTAINERIZATION",
+    desc: "Multiplex tokens to React frontend via SSE/WebSockets, packaged in Docker for OpenShift.",
+    detail: "Real-time token streaming, Prometheus telemetry metrics, and automated Jenkins CI/CD deployment."
   }
 ];
 
 export const SKILLS_CATEGORIES = {
-  "Orchestration": [
-    "LangGraph", "LangChain", "AutoGen", "CrewAI", "Custom DAG Engines", "State Machines"
-  ],
-  "Protocols & Tooling": [
-    "Model Context Protocol (MCP)", "Anthropic Tool Calling", "JSON-RPC 2.0", "gRPC", "REST APIs"
+  "Agentic & AI Orchestration": [
+    "LangGraph", "LangChain", "Model Context Protocol (MCP)", "A2A Protocol", "Multi-Agent DAGs",
+    "Human-in-the-Loop (HITL)", "State Checkpointing", "Supervisor Patterns"
   ],
   "Languages & Backend": [
-    "Python 3.12", "FastAPI", "Pydantic v2", "TypeScript", "Node.js", "Docker", "OpenShift"
+    "Python", "FastAPI", "Pydantic", "Node.js", "JavaScript (ES6+)", "TypeScript", "REST APIs", "SSE & WebSockets"
   ],
-  "Vector & Storage": [
-    "Qdrant", "pgvector", "Redis Cluster", "ClickHouse", "FAISS", "PostgreSQL"
+  "Frontend & UI": [
+    "React.js", "MERN Stack", "HTML5", "Vanilla CSS", "Three.js", "TailwindCSS", "Component Architecture"
   ],
-  "Evals & Guardrails": [
-    "PyTest", "DeepEval", "Ragas", "Token Fuzzing", "Semantic Drift Validation", "Guardrails AI"
+  "Vector Stores & Databases": [
+    "MongoDB & Atlas Search", "ChromaDB", "FAISS", "Vector Embeddings", "HuggingFace", "Redis"
+  ],
+  "Cloud & DevOps": [
+    "Docker", "OpenShift", "Kubernetes", "Jenkins CI/CD", "Git & GitHub", "GitLab", "Terraform"
   ]
 };
 
 export const TERMINAL_COMMANDS = {
   help: `AVAILABLE COMMANDS IN HS-01 RUNTIME:
-  ask <query>        - Run semantic vector inference across production portfolio
-  projects           - Print architecture details for deployed agentic systems
-  telemetry          - Display real-time throughput, latency, and drift metrics
-  mcp                - Inspect Model Context Protocol tools and schemas
-  experience         - Print chronological system engineering work history
-  skills             - Inspect agent engineering tech stack (LangGraph, Python, MCP)
-  benchmarks         - Execute deterministic eval suite runner
-  contact            - Print secure channel keys & comms coordinates
-  cat <filename>     - Read file (e.g., 'cat about.md', 'cat contact.json')
-  clear              - Purge current terminal output`,
+  ask <query>        - Semantic vector query across Harsh's experience and repositories
+  projects           - Inspect production agentic systems (TIAA, JobPilot, Governance Copilot)
+  experience         - Chronological work history (TIAA, Space Agency, Katapult)
+  education          - Academic degree (DJSCE, SBMP) and CGPA metrics
+  skills             - Inspect technical proficiencies (LangGraph, MCP, Python, React, Docker)
+  telemetry          - Live orchestrator telemetry, active daemons, and system health
+  mcp                - Model Context Protocol tools, JSON-RPC schemas, and adapters
+  benchmarks         - Deterministic LLM metrics, latency reductions, and evaluation stats
+  publications       - View academic research paper & hackathon achievements
+  contact            - Print verified comms coordinates (email, phone, LinkedIn, GitHub)
+  cat about.md       - Read Harsh's engineering manifesto
+  cat contact.json   - View structured digital business card
+  clear              - Purge terminal output window`,
 
-  projects: `DEPLOYED AGENTIC SYSTEMS:
-[01] TIAA RETIREMENT WORKFLOWS (RMD / SDA)
-     Stack: Python, FastAPI, LangChain, Anthropic MCP, OpenShift
-     Metric: ~18s -> 8.2s Latency (-54%) | 100% Deterministic
+  projects: `HARSH SHAH // PRODUCTION ARCHITECTURES:
 
-[02] MULTI-AGENT RESEARCH SYNTHESIZER
-     Stack: PyTorch, FastAPI, FAISS, A2A JSON-RPC
-     Metric: 4.8x Context Compression | 0.2% Drift Delta
+[01] TIAA ENTERPRISE AGENTIC ORCHESTRATOR
+     Role: Analyst - Agentic AI Developer
+     Stack: LangGraph, LangChain, MCP, A2A, FastAPI, Docker, OpenShift
+     Metrics: 5 -> 2-3 LLM calls | Latency: 17-18s -> 8-9s | SSE streaming
 
-[03] DETERMINISTIC EVALUATION & GUARDRAIL HARNESS
-     Stack: PyTest, Token Fuzzers, Semantic Drift Evaluator
-     Metric: 1,200 Test Cases | 99.4% Pass Rate in 14.2s`,
+[02] JOBPILOT – MULTI-AGENT JOB APPLICATION CO-PILOT
+     Repo: https://github.com/Harsh-Rupesh-Shah/JobPilot
+     Stack: LangGraph, FastAPI, FAISS, Playwright, Tavily, MongoDB, React
+     Architecture: 2-Phase DAG, Concurrent ATS & Web Scraping, HITL interrupt()
 
-  telemetry: `SYSTEM RUNTIME TELEMETRY (LIVE SNAPSHOT):
-  • Core Orchestrator:       LangGraph v0.2.14 [ACTIVE]
-  • Tool Protocol:           Anthropic MCP v1.0 [STABLE]
-  • Average Graph Latency:   8.24s (Down from 18.0s)
-  • Semantic Drift Delta:    < 0.048 rad (Tolerance: < 0.05 rad)
-  • Schema Validation Pass:  99.4% across 1,200 synthetic vectors
-  • Active Worker Nodes:     4 agents (Searcher, Critic, Synthesizer, Guard)
-  • Memory Overhead:         18.4MB / request`,
+[03] AI DECISION GOVERNANCE COPILOT
+     Repo: https://github.com/Harsh-Rupesh-Shah/AI_Governance_Project
+     Stack: LangGraph, Google Gemini 2.0, ChromaDB, Pydantic, MongoDB
+     Architecture: Dual-Layer MongoDB Memory, Local Policy RAG, 100% Schema Validation`,
 
-  mcp: `MCP DISPATCH TABLE [v1.0-READY]:
-  • tool://portfolio/retirement_calc      -> [ONLINE] [Latency: 12ms]
-  • tool://portfolio/dag_evaluator        -> [ONLINE] [Latency: 8ms]
-  • tool://portfolio/context_pruner       -> [ONLINE] [Latency: 4ms]
-  • tool://portfolio/schema_assert_v2     -> [ONLINE] [Latency: 1ms]
-  All tool calls strictly constrained via JSONSchema with tamper check.`,
+  telemetry: `HS-01 TELEMETRY STATUS // LIVE DAEMON:
+  • Orchestrator:       LangGraph v1.2 / LangChain 1.4 ReAct Engine
+  • Cognitive Engine:   Google Gemini 2.5 Flash
+  • Protocol:           Model Context Protocol (MCP) + A2A Bus
+  • Memory Architecture: Dual-Layer MongoDB (Checkpoints + Long-Term Store)
+  • Vector Stores:      ChromaDB (Local Policy) + FAISS (ATS Embeddings)
+  • Latency Benchmark:  8.2s avg (reduced ~50% from 18s at TIAA)
+  • Concurrency:        2-Phase DAG Fan-out (Concurrent Scraper + Vector Search)
+  • Determinism:        100% Pydantic Schema Conformity`,
 
-  experience: `CHRONOLOGICAL ENGINEERING LOG:
-  2025 - PRESENT // SOFTWARE DEVELOPER, AGENTIC AI & SYSTEMS @ TIAA
-  • Architected autonomous agentic workflows and Model Context Protocol (MCP) infrastructure.
-  • Reduced retirement advisor latency by 54% (18s -> 8.2s) with zero calculation hallucination.
-  • Deployed containerized microservices on OpenShift with automated CI/CD eval gates.
+  mcp: `MODEL CONTEXT PROTOCOL (MCP) // TOOL SUITE:
+  [TOOL 01] query_harsh_dossier_rag
+    Schema: {"type": "object", "properties": {"query": {"type": "string"}}}
+    Target: harsh_knowledge_base.md + resume.pdf (48 chunks, hybrid BM25 + dense)
+  [TOOL 02] get_project_architecture_specs
+    Schema: {"type": "object", "properties": {"project_name": {"type": "string"}}}
+    Target: Detailed DAG topologies, sequencer logic, and streaming specs
+  [TRANSPORT] JSON-RPC over stdio / HTTP SSE`,
 
-  2024 // DISTRIBUTED SYSTEMS & CONCURRENCY
-  • Constructed modular microservices, REST interfaces, and async task pipelines.
-  • Established foundational principles in caching models and deterministic testing.`,
+  benchmarks: `PRODUCTION PERFORMANCE BENCHMARKS:
+  • LLM Call Reduction:   5 calls  ──>  2 - 3 calls  (-50% LLM overhead)
+  • Round-Trip Latency:   17-18s   ──>  8 - 9s        (~50% round-trip reduction)
+  • Output Determinism:   100% (Zero schema drift via Pydantic v2 validators)
+  • Stream Perceived Latency: Sub-400ms First Token via Server-Sent Events (SSE)
+  • Context Compression:  4.8x ratio across multi-hop agent state handoffs`,
 
-  skills: `CORE STACK & RUNTIMES:
-  • Orchestration: LangGraph, LangChain, AutoGen, CrewAI, Custom DAG Engines
-  • Protocols: Model Context Protocol (Anthropic MCP), gRPC, JSON-RPC, REST
-  • Language & Frameworks: Python 3.12, TypeScript, FastAPI, Pydantic, Rust
-  • Vector & Storage: Qdrant, pgvector, Redis Cluster, ClickHouse
-  • Evals & Guardrails: DeepEval, Ragas, TruLens, Guardrails AI, Custom Fuzzers`,
+  experience: `CHRONOLOGICAL WORK HISTORY:
 
-  benchmarks: `RUNNING EVAL SUITE [1,200 TEST CASES]...
-  [Test 001 - 250]: Schema Conformity ................ 250/250 PASSED [OK]
-  [Test 251 - 500]: Adversarial Prompt Injection ..... 250/250 PASSED [OK]
-  [Test 501 - 750]: Tool Dispatch Precision .......... 250/250 PASSED [OK]
-  [Test 751 - 1000]: State Graph Recovery ............ 250/250 PASSED [OK]
-  [Test 1001 - 1200]: Stochastic Drift Tolerance ..... 200/200 PASSED [OK]
-  ========================================================================
-  RESULT: 1,200/1,200 PASSED (100%) in 13.88s | MEMORY OVERHEAD: 18.4MB`,
+• TIAA // ANALYST - AGENTIC AI DEVELOPER (JULY 2025 - CURRENT | MUMBAI)
+  - Engineered multi-agent AI systems with LangChain, LangGraph, MCP, and A2A.
+  - Reduced LLM hops (5 -> 2-3) and latency (18s -> 8-9s) with custom Python sequencers.
+  - Built real-time streaming AI applications using SSE and WebSockets.
+  - Deployed containerized microservices through Docker, Jenkins CI/CD, and OpenShift.
 
-  contact: `COMMUNICATION PROTOCOL:
-  • Location: Mumbai, India (IST / UTC +5:30)
-  • Secure Email: harsh@shah.systems (or harsh.shah@example.com)
-  • GitHub: https://github.com/harsh-shah-dev
-  • LinkedIn: https://linkedin.com/in/harsh-shah-ai
-  • Status: OPEN FOR STRATEGIC AGENTIC AI & ORCHESTRATION ROLES`,
+• SPACE AGENCY // FULL STACK DEVELOPER (JUNE 2024 - MAY 2025 | MUMBAI)
+  - Delivered responsive web applications using MERN stack (MongoDB, Express, React, Node.js).
+  - Implemented secure JWT auth, cookies, and encryption protocols.
 
-  "cat about.md": `HARSH SHAH // AGENTIC AI ENGINEER
-"I replace speculative probabilistic LLM prompts with deterministic, auditable multi-agent systems that enterprise infrastructure can trust."
-Focus: LangGraph DAGs, MCP Protocol integration, adversarial evals, and low-latency cognitive pipelines.`,
+• KATAPULT TECHNOLOGIES // FRONTEND DEVELOPER INTERN (JULY 2021 - SEP 2021 | MUMBAI)
+  - Developed responsive frontend user interfaces with modular web components.`,
+
+  education: `ACADEMIC BACKGROUND:
+
+• DWARKADAS JIVANLAL SANGHVI COLLEGE OF ENGINEERING (DJSCE), MUMBAI
+  B.Tech in Computer Science and Engineering (IoT & Cyber Security with Blockchain)
+  Graduation: 2022 - 2025 | CGPA: 8.70 / 10
+  Minors: Artificial Intelligence | Machine Learning | Deep Learning
+
+• SHRI BHAGUBHAI MAFATLAL POLYTECHNIC (SBMP), MUMBAI
+  Diploma in Computer Engineering | 2019 - 2022
+  Score: 92.00%`,
+
+  skills: `TECHNICAL PROFICIENCY MATRIX:
+
+• Agentic AI:   LangGraph, LangChain, Model Context Protocol (MCP), A2A, HITL, RAG
+• Backend:      Python 3.12, FastAPI, Pydantic v2, Node.js, Express, REST, SSE
+• Frontend:     React.js, JavaScript (ES6+), HTML5, CSS3, Three.js
+• Databases:    MongoDB, MongoDB Atlas Search, ChromaDB, FAISS, Vector Embeddings
+• DevOps:       Docker, Kubernetes, OpenShift, Jenkins CI/CD, Git, GitLab, Terraform`,
+
+  publications: `PUBLICATIONS & HONORS:
+
+• Smart India Hackathon (SIH) 2024 — National Finalist (Dec 2024)
+• Research Publication — IJARSCT Journal (Dec 2021)
+  Title: "Coded Websites Vs WordPress Websites" (DOI: 10.48175/IJARSCT-2140)`,
+
+  contact: `SECURE COMMUNICATION COORDINATES:
+
+• Full Name:   Harsh Shah
+• Location:    Mumbai, Maharashtra, India
+• Email:       hrsshah04022004@gmail.com
+• Phone:       +91 9175366700
+• GitHub:      https://github.com/Harsh-Rupesh-Shah
+• LinkedIn:    https://linkedin.com/in/harshshah2004`,
+
+  "cat about.md": `HARSH SHAH // AGENTIC AI & SYSTEMS DEVELOPER
+"I bridge the gap between speculative foundation models and deterministic, reliable enterprise systems."
+Focus: Multi-agent DAG architectures with LangGraph, Model Context Protocol (MCP) tool integration, Pydantic verification, and real-time streaming user interfaces.`,
 
   "cat contact.json": `{
   "name": "Harsh Shah",
-  "role": "Agentic AI & Systems Engineer",
-  "base": "Mumbai, India",
-  "keys": {
-    "ed25519": "0x7F4E9921B5AA109E2B",
-    "mcp_agent_id": "hs-agent-01-prod"
-  },
-  "status": "Available for High-Impact Agentic Work"
+  "role": "Analyst - Agentic AI Developer",
+  "organization": "TIAA",
+  "location": "Mumbai, India",
+  "email": "hrsshah04022004@gmail.com",
+  "phone": "+91 9175366700",
+  "github": "https://github.com/Harsh-Rupesh-Shah",
+  "linkedin": "https://linkedin.com/in/harshshah2004",
+  "status": "Engineering autonomous agentic infrastructure"
 }`
 };

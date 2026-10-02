@@ -11,11 +11,11 @@ export default function Philosophy() {
         {/* Section Header */}
         <div className="section-header">
           <div>
-            <div className="section-tag">04 // PERSPECTIVE</div>
+            <div className="section-tag">04 // PERSPECTIVE &amp; FOUNDATION</div>
             <h2 className="section-title">Engineering Grounded in Reality</h2>
           </div>
           <p className="section-desc">
-            Deterministic systems over superficial AI hype.
+            Deterministic agentic workflows, distributed concurrency, and auditable production systems.
           </p>
         </div>
 
@@ -24,50 +24,48 @@ export default function Philosophy() {
           {/* Portrait Column */}
           <div className="portrait-card fade-up">
             <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgybpDTQLJf7khMm78uE8Nth_qOFMts0G1VMpkIVe2xS9R3djR46IuGgnZ0UghW2Hpaq8wleubChwQoMk1BSUEk88xGASWhMSPS8lkX-4pPIpw-FE6F1MYEtseYpvnIgfLt_z7KLrMD5QKfMsUNiOyTCdcj2zKiOo2vnln-CIUxsPdSMvTRph0pREJBZRxgZxL0cCYlJP-oD7fIlfymedqLcLeegIpoDQ-vwYUNNLAstiiW_5oqHY"
-              alt="Monochromatic portrait of Harsh Shah, AI systems engineer"
+              src="/portrait.jpg"
+              alt="Portrait of Harsh Shah, Agentic AI Developer"
               className="portrait-img"
               loading="lazy"
             />
             <div className="portrait-caption">
               <span style={{ fontWeight: 700, color: 'var(--text-ink)', textTransform: 'uppercase' }}>HARSH SHAH</span>
-              <span style={{ color: 'var(--accent-mint)', fontWeight: 600 }}>MUMBAI, IN</span>
+              <span style={{ color: 'var(--accent-mint)', fontWeight: 600 }}>MUMBAI, INDIA</span>
+            </div>
+            <div style={{ padding: '0.5rem', borderTop: '1px solid var(--border-hairline)', fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+              <div>ANALYST - AGENTIC AI @ TIAA</div>
+              <div style={{ marginTop: '2px', color: 'var(--text-ink)' }}>DJSCE B.TECH (CGPA: 8.70 / 10)</div>
             </div>
           </div>
 
           {/* Essay & Ethos */}
           <div className="editorial-content fade-up" style={{ animationDelay: '0.1s' }}>
             <p className="editorial-lead">
-              I approach AI engineering not as prompt artistry or speculative science fiction,
-              but as an evolution of <strong>reliable distributed systems</strong>.
+              I build AI systems not as speculative chatbots, but as <strong>deterministic distributed state machines</strong> that enterprise workflows can rely upon with surgical predictability.
             </p>
 
             <p style={{ color: 'var(--text-muted)' }}>
-              While the popular tech conversation oscillates between existential dread and superficial hype,
-              my daily work focuses on something concrete: making non-deterministic large language models
-              behave with surgical predictability in enterprise workflows.
+              Currently an Analyst &amp; Agentic AI Developer at <strong>TIAA</strong>, I specialize in designing multi-agent graphs (LangGraph, LangChain) and Model Context Protocol (MCP) integrations. My focus is cutting LLM hops, reducing round-trip latency by ~50%, and building streaming interfaces with Server-Sent Events (SSE) and WebSockets.
             </p>
 
             <p style={{ color: 'var(--text-muted)' }}>
-              My foundation lies in robust backend architecture—writing clean Python and FastAPI microservices,
-              enforcing strict Pydantic schema validation, and ensuring containerized services run predictably under load.
-              When an LLM enters an enterprise pipeline, it must function as a reasoned cognitive node bound by strict
-              execution safety rails, deterministic fallback channels, and verifiable benchmarks.
+              Beyond enterprise systems, I created <strong>JobPilot</strong> (a concurrent two-phase LangGraph system with Human-in-the-Loop interrupts) and the <strong>AI Decision Governance Copilot</strong> (a stateful governance graph with dual-layer MongoDB checkpointing and ChromaDB policy RAG).
             </p>
 
             {/* Ethos Matrix */}
             <div className="ethos-matrix-row">
               <div>
                 <span className="ethos-col-label">PRIMARY ETHOS</span>
-                <p className="ethos-col-val">DETERMINISM FIRST</p>
+                <p className="ethos-col-val">DETERMINISM OVER DRIFT</p>
               </div>
               <div>
-                <span className="ethos-col-label">TOOL INTERFACE</span>
-                <p className="ethos-col-val">OPEN PROTOCOLS (MCP)</p>
+                <span className="ethos-col-label">TOOL STANDARD</span>
+                <p className="ethos-col-val">MODEL CONTEXT PROTOCOL</p>
               </div>
               <div>
-                <span className="ethos-col-label">LOCATION FOCUS</span>
-                <p className="ethos-col-val">MUMBAI, INDIA (GLOBAL)</p>
+                <span className="ethos-col-label">ACADEMIC HONORS</span>
+                <p className="ethos-col-val">SIH '24 FINALIST · IJARSCT PUB</p>
               </div>
             </div>
 
@@ -75,10 +73,10 @@ export default function Philosophy() {
             <div className="skills-matrix-wrapper">
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
                 <span className="label-mono-xs" style={{ color: 'var(--accent-mint)' }}>
-                  05 // TECH STACK MATRIX
+                  05 // VERIFIED TECH STACK
                 </span>
                 <span className="label-mono-xs" style={{ color: 'var(--text-muted)' }}>
-                  AUDITED PROFICIENCIES
+                  PRODUCTION PROFICIENCIES
                 </span>
               </div>
 

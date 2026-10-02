@@ -32,6 +32,9 @@ export default function TerminalView({ onExitToWeb }) {
   const logStreamRef = useRef(null);
   const inputRef = useRef(null);
 
+  const [isExecuting, setIsExecuting] = useState(false);
+  const [showMobileLogs, setShowMobileLogs] = useState(false);
+
   // Streaming Daemon Log Generator
   useEffect(() => {
     const sampleLogs = [
@@ -75,6 +78,8 @@ export default function TerminalView({ onExitToWeb }) {
   }, []);
 
   const handleRunCommand = async (rawCmd) => {
+    if (isExecuting) return;
+
     const cmd = (rawCmd !== undefined ? rawCmd : inputVal).trim();
     if (!cmd) return;
 
@@ -85,21 +90,64 @@ export default function TerminalView({ onExitToWeb }) {
       return;
     }
 
+    // Immediately clear input and record command history
+    setInputVal('');
     setCommandHistory((prev) => [...prev, cmd]);
     setHistoryIndex(-1);
+    setIsExecuting(true);
 
-    const result = await executeTerminalCommand(cmd);
+    const tempId = Date.now() + Math.random();
 
+    // Show immediate execution row
     setHistory((prev) => [
       ...prev,
       {
+        id: tempId,
         cmd,
-        output: result.output,
-        type: result.type
+        output: 'Executing HS-01 runtime...',
+        type: 'loading',
+        isLoading: true
       }
     ]);
 
-    setInputVal('');
+    try {
+      const result = await executeTerminalCommand(cmd);
+      const outputText = result?.output || `[RUNTIME]: Command '${cmd}' finished with code 0.`;
+      const outputType = result?.type || 'text';
+
+      setHistory((prev) =>
+        prev.map((item) =>
+          item.id === tempId
+            ? {
+                ...item,
+                output: outputText,
+                type: outputType,
+                isLoading: false
+              }
+            : item
+        )
+      );
+    } catch (err) {
+      setHistory((prev) =>
+        prev.map((item) =>
+          item.id === tempId
+            ? {
+                ...item,
+                output: `Execution error: ${err.message || String(err)}`,
+                type: 'error',
+                isLoading: false
+              }
+            : item
+        )
+      );
+    } finally {
+      setIsExecuting(false);
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 50);
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -137,22 +185,36 @@ export default function TerminalView({ onExitToWeb }) {
   return (
     <div className="terminal-view-root">
       {/* Top Bar Navigation */}
-      <div style={{ maxWidth: 'var(--max-w-content)', margin: '0 auto 1.5rem auto', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+      <div className="terminal-top-nav">
+        <div className="terminal-status-badge">
           <span className="dot-mint" style={{ width: '8px', height: '8px' }}></span>
-          <span style={{ color: 'var(--terminal-accent)', fontWeight: 600, letterSpacing: '0.08em', fontSize: '11px' }}>
+          <span className="terminal-status-desktop">
             HS-01 DAEMON ACTIVE // WORKSTATION (PTY/2)
+          </span>
+          <span className="terminal-status-mobile">
+            HS-01 RUNTIME
           </span>
         </div>
 
-        <button
-          type="button"
-          className="btn-primary"
-          onClick={onExitToWeb}
-          style={{ backgroundColor: 'var(--surface-paper)', color: 'var(--text-ink)', border: '1px solid var(--border-hairline)', fontSize: '11px', padding: '0.45rem 0.95rem' }}
-        >
-          <span>EXIT TERMINAL / [WEB MODE ↗]</span>
-        </button>
+        <div className="terminal-top-actions">
+          <button
+            type="button"
+            className="terminal-mobile-logs-btn"
+            onClick={() => setShowMobileLogs((prev) => !prev)}
+            title="Toggle Streaming Daemon Logs"
+          >
+            {showMobileLogs ? '[HIDE LOGS]' : '[SHOW LOGS]'}
+          </button>
+
+          <button
+            type="button"
+            className="btn-primary terminal-exit-btn"
+            onClick={onExitToWeb}
+          >
+            <span className="desktop-text">EXIT TERMINAL / [WEB MODE ↗]</span>
+            <span className="mobile-text">WEB MODE ↗</span>
+          </button>
+        </div>
       </div>
 
       {/* Terminal Window Card */}
@@ -160,9 +222,9 @@ export default function TerminalView({ onExitToWeb }) {
         {/* Title Bar */}
         <div className="terminal-titlebar">
           <div className="window-dots">
-            <span className="dot-control red" title="Close Shell" onClick={() => setHistory([])}></span>
-            <span className="dot-control yellow" title="Minimize"></span>
-            <span className="dot-control green" title="Fullscreen Shell"></span>
+            <span className="dot-control red" title="Clear Shell" onClick={() => setHistory([])}></span>
+            <span className="dot-control yellow" title="Toggle Font" onClick={() => setFontSizeIndex((prev) => (prev + 1) % fontSizes.length)}></span>
+            <span className="dot-control green" title="Clear Shell" onClick={() => setHistory([])}></span>
             <span className="terminal-session-label" style={{ marginLeft: '0.5rem' }}>
               zsh — harsh@hs-01-workstation: ~ (pty/2)
             </span>
@@ -179,7 +241,7 @@ export default function TerminalView({ onExitToWeb }) {
             </button>
             <button
               type="button"
-              className="terminal-tool-btn"
+              className="terminal-tool-btn terminal-font-btn"
               onClick={() => setFontSizeIndex((prev) => (prev + 1) % fontSizes.length)}
               title="Toggle Font Size"
             >
@@ -190,21 +252,23 @@ export default function TerminalView({ onExitToWeb }) {
 
         {/* Quick Command Ribbon */}
         <div className="terminal-command-ribbon">
-          <span style={{ fontSize: '10px', color: 'var(--text-on-dark-muted)', marginRight: '4px' }}>EXECUTE:</span>
-          {['help', 'projects', 'telemetry', 'mcp', 'experience', 'skills', 'benchmarks', 'contact'].map((cmd) => (
-            <button
-              key={cmd}
-              type="button"
-              className="cmd-quick-chip"
-              onClick={() => handleRunCommand(cmd)}
-            >
-              [{cmd.toUpperCase()}]
-            </button>
-          ))}
+          <span className="terminal-ribbon-tag">EXECUTE:</span>
+          <div className="terminal-ribbon-scroll">
+            {['help', 'projects', 'telemetry', 'mcp', 'experience', 'skills', 'benchmarks', 'contact'].map((cmd) => (
+              <button
+                key={cmd}
+                type="button"
+                className="cmd-quick-chip"
+                onClick={() => handleRunCommand(cmd)}
+              >
+                [{cmd.toUpperCase()}]
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Streaming Daemon Log Box */}
-        <div className="terminal-daemon-stream" ref={logStreamRef}>
+        <div className={`terminal-daemon-stream ${showMobileLogs ? 'mobile-visible' : ''}`} ref={logStreamRef}>
           {logs.map((log, idx) => (
             <div key={idx} className="log-entry-row">
               <span style={{ color: 'var(--text-on-dark-muted)' }}>{log.slice(0, 14)}</span>
@@ -224,27 +288,43 @@ export default function TerminalView({ onExitToWeb }) {
           {/* History List */}
           <div className="terminal-history-list">
             {history.map((item, idx) => (
-              <div key={idx} className="terminal-row-item">
+              <div key={item.id || idx} className="terminal-row-item">
                 <div className="terminal-prompt-prefix">
                   <span className="terminal-user-tag">harsh@portfolio</span>
                   <span className="terminal-path-tag">~ %</span>
                   <span className="terminal-command-string">{item.cmd}</span>
                 </div>
-                <pre
-                  className="terminal-output-block"
-                  style={{
-                    color: item.type === 'error' ? 'var(--error)' : 'var(--text-on-dark)',
-                    borderLeftColor: item.type === 'inference' ? 'var(--terminal-accent)' : undefined
-                  }}
-                >
-                  {item.output}
-                </pre>
+                {item.output ? (
+                  <pre
+                    className="terminal-output-block"
+                    style={{
+                      color: item.type === 'error' ? 'var(--error)' : 'var(--text-on-dark)',
+                      borderLeftColor: item.type === 'inference' ? 'var(--terminal-accent)' : undefined,
+                      opacity: item.isLoading ? 0.75 : 1
+                    }}
+                  >
+                    {item.isLoading ? (
+                      <span style={{ color: 'var(--terminal-accent)', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                        <span className="dot-mint" style={{ width: '7px', height: '7px' }}></span>
+                        <span>{item.output}</span>
+                      </span>
+                    ) : (
+                      item.output
+                    )}
+                  </pre>
+                ) : null}
               </div>
             ))}
           </div>
 
           {/* Active Command Input Form */}
-          <form className="terminal-cli-form" onSubmit={(e) => { e.preventDefault(); handleRunCommand(); }}>
+          <form
+            className="terminal-cli-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleRunCommand();
+            }}
+          >
             <div className="terminal-prompt-prefix">
               <span className="terminal-user-tag">harsh@portfolio</span>
               <span className="terminal-path-tag">~ %</span>
@@ -256,10 +336,20 @@ export default function TerminalView({ onExitToWeb }) {
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
               onKeyDown={handleKeyDown}
+              disabled={isExecuting}
               autoFocus
-              placeholder="Type command ('help', 'projects', 'ask <query>', 'mcp')..."
+              placeholder={isExecuting ? "Executing runtime command..." : "Type 'help', 'projects', or ask HS-01..."}
             />
           </form>
+
+          {/* Mobile One-Tap Quick Bar */}
+          <div className="terminal-mobile-quickbar">
+            <span style={{ fontSize: '10px', color: 'var(--text-on-dark-muted)' }}>QUICK:</span>
+            <button type="button" className="mobile-quick-btn" onClick={() => handleRunCommand('help')}>[HELP]</button>
+            <button type="button" className="mobile-quick-btn" onClick={() => handleRunCommand('projects')}>[PROJECTS]</button>
+            <button type="button" className="mobile-quick-btn" onClick={() => handleRunCommand('ask who is harsh?')}>[WHO IS HARSH?]</button>
+            <button type="button" className="mobile-quick-btn" onClick={() => handleRunCommand('clear')}>[CLEAR]</button>
+          </div>
         </div>
       </div>
     </div>

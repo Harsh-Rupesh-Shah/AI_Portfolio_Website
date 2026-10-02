@@ -169,14 +169,28 @@ export default function Systems({ onRunCopilotQuery }) {
                 <span style={{ textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                   {system.tech.slice(0, 3).join(' · ')}
                 </span>
-                <button
-                  type="button"
-                  style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-ink)', fontWeight: 600 }}
-                  onClick={() => setSelectedSystem(system)}
-                >
-                  <span>VIEW DETAILS</span>
-                  <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>arrow_forward</span>
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  {system.githubUrl && (
+                    <a
+                      href={system.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ display: 'flex', alignItems: 'center', gap: '3px', color: 'var(--text-muted)', fontSize: '11px' }}
+                      title="View GitHub Repository"
+                    >
+                      <span className="material-symbols-outlined" style={{ fontSize: '13px' }}>code</span>
+                      <span>CODE</span>
+                    </a>
+                  )}
+                  <button
+                    type="button"
+                    style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-ink)', fontWeight: 600 }}
+                    onClick={() => setSelectedSystem(system)}
+                  >
+                    <span>VIEW DETAILS</span>
+                    <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>arrow_forward</span>
+                  </button>
+                </div>
               </div>
             </div>
           ))}

@@ -59,7 +59,7 @@ export default function Header({ currentMode, onToggleMode }) {
           </div>
           <div className="brand-text">
             <span className="brand-name">HARSH SHAH</span>
-            <span className="brand-subtitle">AI / AGENTIC SYSTEMS</span>
+            <span className="brand-subtitle">AGENTIC AI DEVELOPER @ TIAA</span>
           </div>
         </a>
 
@@ -145,8 +145,7 @@ export default function Header({ currentMode, onToggleMode }) {
           {/* Mobile hamburger button */}
           <button
             type="button"
-            className="mode-btn"
-            style={{ display: 'flex', padding: '6px' }}
+            className="mobile-hamburger-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -159,32 +158,18 @@ export default function Header({ currentMode, onToggleMode }) {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '64px',
-            left: 0,
-            width: '100%',
-            backgroundColor: 'var(--surface-card)',
-            borderBottom: '1px solid var(--border-hairline)',
-            padding: '1.25rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem',
-            boxShadow: 'var(--shadow-card)'
-          }}
-        >
-          <a href="#hero" className="nav-link" onClick={(e) => handleNavClick(e, 'hero')}>01 // OVERVIEW</a>
-          <a href="#systems" className="nav-link" onClick={(e) => handleNavClick(e, 'systems')}>02 // SYSTEMS</a>
-          <a href="#pipeline" className="nav-link" onClick={(e) => handleNavClick(e, 'pipeline')}>03 // PIPELINE</a>
-          <a href="#experience" className="nav-link" onClick={(e) => handleNavClick(e, 'experience')}>04 // EXPERIENCE</a>
-          <a href="#about" className="nav-link" onClick={(e) => handleNavClick(e, 'about')}>05 // PHILOSOPHY</a>
-          <a href="#contact" className="nav-link" onClick={(e) => handleNavClick(e, 'contact')}>06 // CONTACT</a>
-          <div style={{ paddingTop: '0.5rem', borderTop: '1px solid var(--border-hairline)' }}>
+        <div className="mobile-nav-drawer">
+          <a href="#hero" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'hero')}>01 // OVERVIEW</a>
+          <a href="#systems" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'systems')}>02 // SYSTEMS</a>
+          <a href="#pipeline" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'pipeline')}>03 // PIPELINE</a>
+          <a href="#experience" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'experience')}>04 // EXPERIENCE</a>
+          <a href="#about" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'about')}>05 // PHILOSOPHY</a>
+          <a href="#contact" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'contact')}>06 // CONTACT</a>
+          <div style={{ paddingTop: '0.75rem', borderTop: '1px solid var(--border-hairline)' }}>
             <button
               type="button"
               className="btn-secondary"
-              style={{ width: '100%' }}
+              style={{ width: '100%', justifyContent: 'center' }}
               onClick={() => {
                 onToggleMode(currentMode === 'web' ? 'terminal' : 'web');
                 setMobileMenuOpen(false);
