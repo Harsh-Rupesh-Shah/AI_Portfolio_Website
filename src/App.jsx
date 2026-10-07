@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Systems from './components/Systems';
-import Pipeline from './components/Pipeline';
+import ProjectVideos from './components/ProjectVideos';
 import Experience from './components/Experience';
 import Philosophy from './components/Philosophy';
 import Contact from './components/Contact';
@@ -61,7 +61,7 @@ export default function App() {
         <main>
           <Hero onSwitchToTerminal={() => setMode('terminal')} />
           <Systems />
-          <Pipeline />
+          <ProjectVideos />
           <Experience />
           <Philosophy />
           <Contact onAskCopilotContact={handleAskCopilotContact} />

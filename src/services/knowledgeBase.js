@@ -130,6 +130,61 @@ export const SYSTEMS_DATA = [
   }
 ];
 
+export const PROJECT_VIDEOS = [
+  {
+    id: "ai-governance-copilot",
+    title: "AI Decision Governance Copilot",
+    subtitle: "Enterprise Multi-Agent Regulatory Compliance & Memory Graph",
+    tag: "01 // SYSTEM DEMO",
+    duration: "03:15 // 4K WALKTHROUGH",
+    badge: "LANGGRAPH + CHROMADB",
+    coverImage: "/images/ai_governance_cover.jpg",
+    videoSrc: "/videos/ai_governance_demo.mp4",
+    demoSampleUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    embedUrl: "",
+    githubUrl: "https://github.com/Harsh-Rupesh-Shah/AI_Governance_Project",
+    description: "End-to-end architectural demonstration of the multi-agent governance graph. Features supervisor intent parsing, dual-layer MongoDB state checkpoints, local ChromaDB policy RAG, and 100% Pydantic structured output validation.",
+    keyHighlights: [
+      "Supervisor agent routing across Intent, Policy, and Risk evaluation nodes",
+      "Dual-layer MongoDB memory (LangGraph checkpoints + long-term persistence)",
+      "ChromaDB local vector store for zero-latency regulatory policy queries",
+      "Strict Pydantic v2 validation eliminating output hallucinations"
+    ],
+    tags: ["LangGraph", "ChromaDB", "Dual MongoDB Memory", "Pydantic v2", "FastAPI"],
+    metrics: [
+      { label: "Schema Determinism", value: "100%" },
+      { label: "Policy Retrieval", value: "<45ms" },
+      { label: "Supervisor Nodes", value: "5 Agents" }
+    ]
+  },
+  {
+    id: "jobpilot-autonomous-copilot",
+    title: "JobPilot – Autonomous Job Application Co-Pilot",
+    subtitle: "Two-Phase DAG Orchestration with Concurrent ATS & Web Scraping + HITL",
+    tag: "02 // SYSTEM DEMO",
+    duration: "02:40 // 4K WALKTHROUGH",
+    badge: "2-PHASE DAG + HITL",
+    coverImage: "/images/jobpilot_cover.jpg",
+    videoSrc: "/videos/jobpilot_demo.mp4",
+    demoSampleUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    embedUrl: "",
+    githubUrl: "https://github.com/Harsh-Rupesh-Shah/JobPilot",
+    description: "Deep-dive demonstration into the JobPilot pipeline executing concurrent ATS resume similarity scoring (FAISS) and Playwright/Tavily web scraping, before pausing execution for human approval via LangGraph interrupt().",
+    keyHighlights: [
+      "Concurrent two-phase DAG execution fan-out across worker nodes",
+      "Dense ATS resume similarity matching powered by FAISS vector indexes",
+      "Autonomous headless web crawling with Playwright and Tavily search",
+      "Deterministic human-in-the-loop authorization via LangGraph interrupt()"
+    ],
+    tags: ["LangGraph DAG", "FAISS Vector Store", "Playwright", "Tavily Search", "HITL interrupt()"],
+    metrics: [
+      { label: "Match Accuracy", value: "94.2%" },
+      { label: "Fan-Out Threads", value: "2 Nodes" },
+      { label: "Human Verification", value: "HITL Gate" }
+    ]
+  }
+];
+
 export const PIPELINE_STAGES = [
   {
     num: "01",
@@ -193,6 +248,9 @@ export const TERMINAL_COMMANDS = {
   help: `AVAILABLE COMMANDS IN HS-01 RUNTIME:
   ask <query>        - Semantic vector query across Harsh's experience and repositories
   projects           - Inspect production agentic systems (TIAA, JobPilot, Governance Copilot)
+  videos             - Inspect high-definition in-site video walkthroughs of flagship systems
+  llm                - Live status of multi-tier LLM failover engine (Google, OpenRouter, RAG)
+  keys               - Inspect configured API keys, tier states, and fallback priority
   experience         - Chronological work history (TIAA, Space Agency, Katapult)
   education          - Academic degree (DJSCE, SBMP) and CGPA metrics
   skills             - Inspect technical proficiencies (LangGraph, MCP, Python, React, Docker)
@@ -204,6 +262,32 @@ export const TERMINAL_COMMANDS = {
   cat about.md       - Read Harsh's engineering manifesto
   cat contact.json   - View structured digital business card
   clear              - Purge terminal output window`,
+
+  llm: `HS-01 MULTI-TIER LLM PROVIDER POOL & FAILOVER ENGINE:
+  • Tier 1: Google Gemini 2.5 Flash (Primary Key)  - State: HEALTHY (Default)
+  • Tier 2: Google Gemini 2.5 Flash (Backup Key)   - State: READY (Auto Failover)
+  • Tier 3: OpenRouter Free Models (Cohere/Gemma)  - State: READY (Zero-Quota Failover)
+  • Tier 4: Production Hybrid RAG Engine (Local)   - State: ONLINE (Zero-API Offline)
+
+Failover Strategy: Instantaneous sequential failover on HTTP 429 / Quota exhaustion.
+Switch Provider:   Type 'switch <provider>' or use API: POST /api/llm/switch`,
+
+  keys: `CONFIGURED LLM KEYS & ENGINE COGNITION CREDENTIALS:
+  • GOOGLE_API_KEY:        AIzaSyA...zA4Q (Tier 1 Primary)
+  • GOOGLE_API_KEY_BACKUP: AIzaSyB...NV-4 (Tier 2 Backup)
+  • OPENROUTER_API_KEY:    sk-or-v...5188 (Tier 3 OpenRouter Free)
+  • RAG ENGINE:            OFFLINE (BM25 + Dense Dual-Corpus Index)
+Active Mode:               Autonomous Multi-Tier Failover (Auto)`,
+
+  videos: `PRODUCTION SYSTEM VIDEO WALKTHROUGHS:
+  [01] AI Decision Governance Copilot
+       Duration: 03:15 // 4K Walkthrough | Stack: LangGraph + ChromaDB
+       Features: Dual-layer MongoDB checkpoints, local policy RAG, 100% Pydantic validation
+  [02] JobPilot – Autonomous Job Co-Pilot
+       Duration: 02:40 // 4K Walkthrough | Stack: 2-Phase DAG + HITL
+       Features: Concurrent ATS scoring (FAISS) & Playwright crawling + HITL interrupt()
+
+Navigate to the VIDEOS section on the website to launch the interactive in-site player!`,
 
   projects: `HARSH SHAH // PRODUCTION ARCHITECTURES:
 

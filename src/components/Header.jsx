@@ -6,7 +6,7 @@ export default function Header({ currentMode, onToggleMode }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'systems', 'pipeline', 'experience', 'about', 'contact'];
+      const sections = ['hero', 'systems', 'videos', 'experience', 'about', 'contact'];
       const scrollPos = window.scrollY + 100;
 
       for (const section of sections) {
@@ -80,11 +80,11 @@ export default function Header({ currentMode, onToggleMode }) {
             SYSTEMS
           </a>
           <a
-            href="#pipeline"
-            className={`nav-link ${activeSection === 'pipeline' && currentMode === 'web' ? 'active' : ''}`}
-            onClick={(e) => handleNavClick(e, 'pipeline')}
+            href="#videos"
+            className={`nav-link ${activeSection === 'videos' && currentMode === 'web' ? 'active' : ''}`}
+            onClick={(e) => handleNavClick(e, 'videos')}
           >
-            PIPELINE
+            VIDEOS
           </a>
           <a
             href="#experience"
@@ -161,7 +161,7 @@ export default function Header({ currentMode, onToggleMode }) {
         <div className="mobile-nav-drawer">
           <a href="#hero" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'hero')}>01 // OVERVIEW</a>
           <a href="#systems" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'systems')}>02 // SYSTEMS</a>
-          <a href="#pipeline" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'pipeline')}>03 // PIPELINE</a>
+          <a href="#videos" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'videos')}>03 // VIDEOS</a>
           <a href="#experience" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'experience')}>04 // EXPERIENCE</a>
           <a href="#about" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'about')}>05 // PHILOSOPHY</a>
           <a href="#contact" className="mobile-nav-link" onClick={(e) => handleNavClick(e, 'contact')}>06 // CONTACT</a>
